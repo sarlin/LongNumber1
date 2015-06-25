@@ -440,7 +440,7 @@ char* OutputNumber(struct LongNumber number)
 	j = 0;
 	string = (char*)malloc(sizeof(char)*(1));
 	string[0] = '\0';
-	for (i = decimal.size - 1; i > -1; i--)
+	for (i = decimal.size - 1; i > 0; i--)
 	{
 		printf("%c", decimal.digit[i]);
 	}
