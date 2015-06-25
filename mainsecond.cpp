@@ -4,13 +4,13 @@ int main(int argc, const char * argv[])
 {
 	if (argc < 5) 
 	{
-        printf("Error: Too few arguments. <first_long_number_filename> [ + | - | * | / | % | ^ ] <second_long_number_filename> <result_long_number_filename>\n");
+        printf("Error: Too few arguments\n");
         return 0;
     }
     
     if (argc > 7) 
 	{
-        printf("Error: Too many arguments. <first_long_number_filename> [ + | - | * | / | % | ^ ] <second_long_number_filename> <result_long_number_filename> <module_long_number_filename> <-b>\n");
+        printf("Error: Too many arguments\n");
         return 0;
     }
     
