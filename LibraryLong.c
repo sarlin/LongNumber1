@@ -208,26 +208,34 @@ struct LongNumber Division(struct LongNumber a, struct LongNumber b, int choice)
 struct LongNumber Degree(struct LongNumber a, struct LongNumber b, struct LongNumber c)
 {
 	struct LongNumber result;
+	unsigned int lol;
 	if (a.size < c.size)
-		result.size = c.size + c.size;
+		lol = (unsigned int)c.size + (unsigned int)c.size;
 	else
-		result.size = a.size + a.size;
+		lol = (unsigned int)a.size + (unsigned int)a.size;
+	result.size = lol;
 	result.digit = (unsigned int*)malloc(sizeof(unsigned int)*(result.size));
-	memset(result.digit, 0, result.size * sizeof(unsigned int));
+	memset(result.digit, 1, result.size * sizeof(unsigned int));
 	result.digit[0] = 1;
 	struct LongNumber com;
 	com.size = 1;
 	com.digit = (unsigned int*)malloc(sizeof(unsigned int)*(com.size));
 	com.digit[0] = 0;
+
+	struct LongNumber org;
+	org.size = 1;
+	org.digit = (unsigned int*)malloc(sizeof(unsigned int)*(org.size));
+	org.digit[0] = 2;
+
 	struct LongNumber value;
 	value.size = result.size;
 	value.digit = (unsigned int*)malloc(sizeof(unsigned int)*(value.size));
-	memset(result.digit, 0, result.size * sizeof(unsigned int));
-	memcpy(value.digit, a.digit, a.size * sizeof(unsigned int));
-	struct LongNumber pow = Copy(b);
-	while ((Compare(pow, com)) > 0)
+	value = Copy(a);
+	struct LongNumber pow;
+	pow = Copy(b);
+	while ((pow.size != 1) || (pow.digit[0] != 0))
 	{
-		if ((pow.digit[0] & 1) == 1)
+		if (pow.digit[0] % 2 == 1)
 		{
 			result = Multiplication(result, value);
 			result = Division(result, c, 2);
@@ -241,6 +249,7 @@ struct LongNumber Degree(struct LongNumber a, struct LongNumber b, struct LongNu
 	free(value.digit);
 	return result;
 }
+
 
 struct LongNumber InputBinFile(const char* file)
 {
