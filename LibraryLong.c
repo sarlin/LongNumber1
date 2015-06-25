@@ -400,30 +400,28 @@ void OutputTextFile(const char* file, struct LongNumber number)
 
 struct LongNumber InputNumber(unsigned long long int value)
 {
-	unsigned long long int carry = value;
-	struct LongNumber num;
-	num.digit = (unsigned int*)malloc(sizeof(unsigned int)*(3));
-	num.size = 0;
-	do
+	struct LongNumber number;
+	number.size = 0;
+	number.digit = (unsigned int*)malloc(sizeof(unsigned int));
+	while (value)
 	{
-		num.size++;
-		num.digit[num.size - 1] = carry % dword;
-		carry = carry / dword;
-	} while (carry);
-	return num;
+		number.size++;
+		number.digit[number.size - 1] = value % dword;
+		value = value / dword;
+	}
+	return number;
 }
-
 
 char* OutputNumber(struct LongNumber number)
 {
 	struct LongNumber decimal;
-	unsigned int  j = 0;
-	long long int temporary, i;
+	unsigned int a, j = 0;
+	long long int temporary, i = number.size - 1;
 	char carry;
 	decimal.size = number.size * 10;
 	decimal.digit = (unsigned int*)malloc(sizeof(unsigned int)*(decimal.size));
 	memset(decimal.digit, 0, decimal.size * sizeof(unsigned int));
-	while (number.size != 1 || number.digit[0] != 0)
+	while ((number.size != 1) || (number.digit[0] != 0))
 	{
 		carry = 0;
 		for (i = number.size - 1; i >= 0; i--)
@@ -443,7 +441,9 @@ char* OutputNumber(struct LongNumber number)
 	string = (char*)malloc(sizeof(char)*(1));
 	string[0] = '\0';
 	for (i = decimal.size - 1; i > -1; i--)
+	{
 		printf("%c", decimal.digit[i]);
+	}
 	free(decimal.digit);
 	decimal.size = 0;
 	return string;
@@ -451,40 +451,32 @@ char* OutputNumber(struct LongNumber number)
 
 struct LongNumber InputString(const char* num)
 {
+	unsigned int carry, temporary, current = 1, j = 0, k = 0;
 	struct LongNumber bin, number;
 	char ch;
 	long long int i = 0;
-	unsigned int carry, temporary, current, j, k;
-
 	for (; i < strlen(num); i++)
-	if (num[i] < '0' || num[i] > '9')
 	{
-		printf("Error: Wrong string: %s \n", num);
-		bin.digit = (unsigned int*)malloc(sizeof(unsigned int)*(1));
-		bin.digit[0] = 0;
-		bin.size = 1;
-		return bin;
+		if (num[i] < '0' || num[i] > '9')
+		{
+			printf("Error: Wrong string: %s \n", num);
+			bin.digit = (unsigned int*)malloc(sizeof(unsigned int)*(1));
+			bin.digit[0] = 0;
+			bin.size = 1;
+			return bin;
+		}
 	}
-
 	number.size = strlen(num);
-
 	number.digit = (unsigned int*)malloc(sizeof(unsigned int)*(number.size));
 	memset(number.digit, 0, number.size * sizeof(unsigned int));
-
 	bin.size = number.size / 9 + 1;
-
 	bin.digit = (unsigned int*)malloc(sizeof(unsigned int)*(bin.size));
 	memset(bin.digit, 0, bin.size * sizeof(unsigned int));
-
 	i = number.size - 1;
-
 	for (; i > -1; --i)
+	{
 		number.digit[i] = num[number.size - i - 1] - '0';
-
-	current = 1;
-	j = 0;
-	k = 0;
-
+	}
 	while (number.size != 1 || number.digit[0] != 0)
 	{
 		carry = 0;
@@ -508,13 +500,11 @@ struct LongNumber InputString(const char* num)
 			j++;
 		}
 	}
-
 	free(number.digit);
-
 	bin = ToNorm(bin);
-
 	return bin;
 }
+
 struct LongNumber Copy(struct LongNumber from)
 {
     struct LongNumber replica;
