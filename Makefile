@@ -3,10 +3,11 @@ first:
 	gcc -c -fPIC LibraryLong.c -o LibraryLong.o
 	gcc -shared -o LibraryLong.so LibraryLong.o
 	gcc -c main.c
-	gcc main.o -L. -lLibaryLong -o TCHMK-1
+	gcc main.o -L. -lLibaryLong -o FirstLab
 
 second:
-	g++ --c -fPIC ClassLong.cpp -o ClassLong.o LibraryLong.c -o LibraryLong.o
-	g++ -shared  o ClassLong.so ClassLong.o LibraryLong.so LibraryLong.o
+	g++ -c -fPIC LibraryLong.c -o LibraryLong.o
+	g++ -c -fPIC ClassLong.c -o ClassLong.o
+	g++ -shared -o libClassLong.so LibraryLong.o ClassLong.o
 	g++ -c main.cpp
-	g++  main.o -L. -lClassLong -lLibraryLong -o TCHMK-2
+	g++ mainsec.o -L. -lClassLong -o SecondLab
