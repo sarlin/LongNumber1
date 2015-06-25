@@ -244,7 +244,7 @@ struct LongNumber Degree(struct LongNumber a, struct LongNumber b, struct LongNu
 
 struct LongNumber InputBinFile(const char* file)
 {
-	int i;
+	unsigned int i;
 	struct LongNumber number;
 	number.size = 0;
 	FILE* check = fopen(file, "r");
